@@ -527,6 +527,27 @@ class PromptServer():
                     self.prompt_queue.delete_history_item(id_to_delete)
 
             return web.Response(status=200)
+
+        @routes.get('/nodes_info')
+        async def get_nodes_info(request):
+            result = {}
+            for node_type in nodes.NODE_CLASS_MAPPINGS:
+                node = nodes.NODE_CLASS_MAPPINGS[node_type]
+                result[node_type] = {
+                    'inputs': {},
+                    'output': node.RETURN_TYPES,
+                }
+
+                input_types = node.INPUT_TYPES()
+                for category in input_types:
+                    result[node_type]['inputs'][category] = []
+                    for field_name in input_types[category]:
+                        result[node_type]['inputs'][category].append({
+                            'name': field_name,
+                            'value': input_types[category][field_name]
+                        })
+
+            return web.Response(status=200, body=json.dumps(result))
         
     def add_routes(self):
         self.user_manager.add_routes(self.routes)

@@ -39,6 +39,9 @@ temp_directory = os.path.join(os.path.dirname(os.path.realpath(__file__)), "temp
 input_directory = os.path.join(os.path.dirname(os.path.realpath(__file__)), "input")
 user_directory = os.path.join(os.path.dirname(os.path.realpath(__file__)), "user")
 
+output_directory = '/images/output'
+input_directory = '/images/input'
+
 filename_list_cache = {}
 
 if not os.path.exists(input_directory):
